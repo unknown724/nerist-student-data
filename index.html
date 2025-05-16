@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NERIST Student Search</title>
+  <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/babel-standalone@7.22.5/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const App = () => {
+      const [studentsData, setStudentsData] = React.useState([]);
+      const [searchTerm, setSearchTerm] = React.useState('');
+      const [searchField, setSearchField] = React.useState('Name');
+      const [loading, setLoading] = React.useState(true);
+      const [error, setError] = React.useState(null);
+      const fields = [
+        'Sl. No.', 'Name', 'Reg. No.', 'Roll No.', 'Gender', 'Category',
+        'State', 'Religion', 'Program', 'Discipline', 'Stage'
+      ];
+      React.useEffect(() => {
+        fetch('/students.json')
+          .then(response => {
+            if (!response.ok) throw new Error('Failed to fetch student data');
+            return response.json();
+          })
+          .then(data => {
+            setStudentsData(data);
+            setLoading(false);
+          })
+          .catch(err => {
+            setError(err.message);
+            setLoading(false);
+          });
+      }, []);
+      const filteredStudents = studentsData.filter(student =>
+        String(student[searchField.replace(/\./g, '').replace(/ /g, '')])
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase())
+      );
+      if (loading) {
+        return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+      }
+      if (error) {
+        return <div className="min-h-screen flex items-center justify-center text-red-500">{error}</div>;
+      }
+      return (
+        <div className="min-h-screen bg-gray-100 p-4">
+          <div className="max-w-7xl mx-auto">
+            <h1 className="text-3xl font-bold text-center mb-6">
+              NERIST Student Search
+            </h1>
+            <div className="mb-4 flex flex-col sm:flex-row gap-4">
+              <select
+                className="p-2 border rounded"
+                value={searchField}
+                onChange={(e) => setSearchField(e.target.value)}
+              >
+                {fields.map(field => (
+                  <option key={field} value={field}>{field}</option>
+                ))}
+              </select>
+              <input
+                type="text"
+                placeholder={`Search by ${searchField}...`}
+                className="p-2 border rounded w-full sm:w-1/2"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+            <div className="overflow-x-auto bg-white rounded shadow">
+              <table className="min-w-full">
+                <thead>
+                  <tr className="bg-gray-200">
+                    {fields.map(field => (
+                      <th key={field} className="p-2 text-left">{field}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredStudents.map(student => (
+                    <tr key={student['Sl. No.']} className="border-b">
+                      {fields.map(field => (
+                        <td key={field} className="p-2">
+                          {student[field.replace(/\./g, '').replace(/ /g, '')]}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="mt-4 text-center text-gray-600">
+              Showing {filteredStudents.length} of {studentsData.length} students
+            </p>
+          </div>
+        </div>
+      );
+    };
+    ReactDOM.render(<App />, document.getElementById('root'));
+  </script>
+</body>
+</html>
