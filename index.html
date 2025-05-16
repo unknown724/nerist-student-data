@@ -14,14 +14,18 @@
   <script type="text/babel">
     const App = () => {
       const [studentsData, setStudentsData] = React.useState([]);
-      const [searchTerm, setSearchTerm] = React.useState('');
+      const [inputTerm, setInputTerm] = React.useState(''); // Temporary input value
+      const [searchTerm, setSearchTerm] = React.useState(''); // Actual search term
       const [searchField, setSearchField] = React.useState('Name');
       const [loading, setLoading] = React.useState(true);
       const [error, setError] = React.useState(null);
+
       const fields = [
         'Sl. No.', 'Name', 'Reg. No.', 'Roll No.', 'Gender', 'Category',
         'State', 'Religion', 'Program', 'Discipline', 'Stage'
       ];
+
+      // Fetch student data on component mount
       React.useEffect(() => {
         fetch('/students.json')
           .then(response => {
@@ -37,17 +41,26 @@
             setLoading(false);
           });
       }, []);
+
+      // Handle search button click
+      const handleSearch = () => {
+        setSearchTerm(inputTerm); // Update search term only on button click
+      };
+
       const filteredStudents = studentsData.filter(student =>
         String(student[searchField.replace(/\./g, '').replace(/ /g, '')])
           .toLowerCase()
           .includes(searchTerm.toLowerCase())
       );
+
       if (loading) {
         return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
       }
+
       if (error) {
         return <div className="min-h-screen flex items-center justify-center text-red-500">{error}</div>;
       }
+
       return (
         <div className="min-h-screen bg-gray-100 p-4">
           <div className="max-w-7xl mx-auto">
@@ -68,9 +81,15 @@
                 type="text"
                 placeholder={`Search by ${searchField}...`}
                 className="p-2 border rounded w-full sm:w-1/2"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                value={inputTerm}
+                onChange={(e) => setInputTerm(e.target.value)}
               />
+              <button
+                className="p-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                onClick={handleSearch}
+              >
+                Search
+              </button>
             </div>
             <div className="overflow-x-auto bg-white rounded shadow">
               <table className="min-w-full">
@@ -101,6 +120,7 @@
         </div>
       );
     };
+
     ReactDOM.render(<App />, document.getElementById('root'));
   </script>
 </body>
