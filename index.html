@@ -11,94 +11,105 @@
 
     body {
       margin: 0;
-      padding: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(145deg, #fff0f5, #e0c3fc);
+      background: linear-gradient(135deg, #fbeeff, #e7d8f3, #f2cee6);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 40px 20px;
+      justify-content: center;
+      padding: 20px;
     }
 
     h1 {
-      font-size: 2.2rem;
-      margin-bottom: 30px;
-      background: linear-gradient(to right, #ffb6c1, #dda0dd, #fef3f9);
+      font-size: 2.5rem;
+      font-weight: 700;
+      background: linear-gradient(to right, #dd63aa, #8f70d8);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: #6d6b78;
+      margin-bottom: 30px;
       text-align: center;
     }
 
     .container {
-      width: 100%;
-      max-width: 600px;
-      background: rgba(255, 255, 255, 0.3);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      padding: 24px;
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border-radius: 20px;
-      box-shadow: 0 12px 30px rgba(240, 190, 250, 0.25);
+      padding: 30px 20px;
+      max-width: 450px;
+      width: 100%;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
     }
 
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    #searchInput {
-      padding: 14px 16px;
+    .label {
       font-size: 1rem;
+      font-weight: 600;
+      color: #d067aa;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 1.1rem;
       border: none;
       border-radius: 12px;
-      background: #fff8fc;
-      box-shadow: inset 0 0 4px rgba(255, 182, 193, 0.4);
+      background-color: #f5e6fb;
+      color: #333;
+      text-align: center;
+      box-shadow: inset 0 0 6px rgba(220, 155, 255, 0.25);
       outline: none;
-      transition: all 0.3s ease-in-out;
+      transition: all 0.3s ease;
     }
 
-    #searchInput:focus {
-      box-shadow: 0 0 0 3px rgba(255, 182, 193, 0.3);
+    input[type="text"]::placeholder {
+      color: #b7a9c8;
     }
 
-    #searchBtn {
+    button {
+      width: 100%;
+      margin-top: 20px;
       padding: 14px;
       font-size: 1rem;
-      font-weight: 500;
-      border: none;
-      border-radius: 10px;
-      background: linear-gradient(to right, #fcbad3, #dcb0ff);
+      font-weight: 600;
       color: white;
+      background: linear-gradient(to right, #dd63aa, #8f70d8);
+      border: none;
+      border-radius: 12px;
       cursor: pointer;
+      box-shadow: 0 6px 18px rgba(220, 155, 255, 0.3);
       transition: background 0.3s ease;
-      box-shadow: 0 4px 12px rgba(255, 192, 203, 0.3);
     }
 
-    #searchBtn:hover {
-      background: linear-gradient(to right, #eab0d1, #cfb2ff);
+    button:hover {
+      background: linear-gradient(to right, #c65399, #7a60c1);
     }
 
     #output {
-      margin-top: 30px;
+      margin-top: 25px;
+      max-height: 300px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      background: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       padding: 20px;
-      border-radius: 16px;
-      background: rgba(255, 240, 250, 0.85);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1px solid rgba(255, 200, 255, 0.3);
-      color: #5b3b63;
+      border-radius: 14px;
       font-family: 'Courier New', monospace;
       font-size: 1rem;
-      line-height: 1.6;
-      max-height: 400px;
-      overflow-y: auto;
-      width: 100%;
-      white-space: pre-wrap;
-      box-shadow:
-        inset 0 0 8px rgba(255, 160, 190, 0.2),
-        0 8px 24px rgba(230, 200, 250, 0.2);
-      transition: all 0.3s ease-in-out;
+      color: #3d2f4d;
+      border: 1px solid rgba(200, 150, 220, 0.2);
+      box-shadow: inset 0 0 4px rgba(200, 150, 230, 0.15);
     }
 
     #output::-webkit-scrollbar {
@@ -106,46 +117,43 @@
     }
 
     #output::-webkit-scrollbar-thumb {
-      background: linear-gradient(180deg, #ffd6eb, #e0b0ff);
-      border-radius: 8px;
-      border: 2px solid rgba(255, 255, 255, 0.2);
+      background: linear-gradient(#dd63aa, #8f70d8);
+      border-radius: 6px;
     }
 
     #output::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.05);
+      background: transparent;
     }
 
     @media (max-width: 600px) {
       h1 {
-        font-size: 1.6rem;
-        margin-bottom: 20px;
+        font-size: 1.8rem;
+      }
+
+      h2 {
+        font-size: 1rem;
       }
 
       .container {
         padding: 20px;
       }
 
-      #searchInput, #searchBtn {
-        font-size: 0.95rem;
-        padding: 12px;
-      }
-
-      #output {
-        font-size: 0.95rem;
+      input[type="text"], button {
+        font-size: 1rem;
       }
     }
   </style>
 </head>
 <body>
 
-  <h1>NERIST Student Search</h1>
+  <h1> Nerist Student Data </h1>
+  <h2>By Vercel</h2>
 
   <div class="container">
-    <div class="form-group">
-      <input type="text" id="searchInput" placeholder="Enter name, reg no, roll no..."/>
-      <button id="searchBtn">Search</button>
-    </div>
-    <div id="output">Search results will appear here...</div>
+    <div class="label">Free to Explore</div>
+    <input type="text" id="searchInput" placeholder="Enter name, reg no, roll no..." />
+    <button id="searchBtn">Search</button>
+    <div id="output">Search results:</div>
   </div>
 
   <script>
@@ -172,7 +180,7 @@
         outputDiv.textContent = results.map((student, idx) =>
           `#${idx + 1}:\n` +
           Object.entries(student).map(([k, v]) => `${k}: ${v}`).join('\n')
-        ).join('\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n');
+        ).join('\n\n────────────────────────────────────────────\n\n');
       }
     });
   </script>
