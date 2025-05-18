@@ -15,36 +15,40 @@
       font-family: 'Segoe UI', sans-serif;
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start;
       flex-direction: column;
       min-height: 100vh;
-      background: linear-gradient(135deg, #e0c3fc, #8ec5fc);
+      background: linear-gradient(135deg, #f9dfff, #b9b2ff);
       padding: 20px;
     }
 
     h1 {
-      font-size: 2.5rem;
+      font-size: 2rem;
       margin-bottom: 20px;
-      background: linear-gradient(to right, #8e44ad, #3498db);
+      background: linear-gradient(to right, #d16ba5, #86a8e7, #5ffbf1);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      text-align: center;
+      width: 100%;
     }
 
     .search-container {
-      background: rgba(255, 255, 255, 0.25);
-      backdrop-filter: blur(10px);
-      padding: 30px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 20px;
       border-radius: 16px;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
       width: 100%;
       max-width: 500px;
+      margin: auto;
       text-align: center;
     }
 
     #searchInput {
-      width: 80%;
+      width: 100%;
       padding: 12px 15px;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       font-size: 1rem;
       border: none;
       border-radius: 12px;
@@ -54,7 +58,7 @@
     }
 
     #searchInput:focus {
-      box-shadow: 0 0 0 3px rgba(142, 68, 173, 0.2);
+      box-shadow: 0 0 0 3px rgba(209, 107, 165, 0.3);
     }
 
     #searchBtn {
@@ -62,56 +66,67 @@
       font-size: 1rem;
       border: none;
       border-radius: 10px;
-      background: linear-gradient(to right, #6a11cb, #2575fc);
+      background: linear-gradient(to right, #d16ba5, #86a8e7);
       color: white;
       cursor: pointer;
       transition: background 0.3s ease;
     }
 
     #searchBtn:hover {
-      background: linear-gradient(to right, #8e44ad, #3498db);
+      background: linear-gradient(to right, #c471f5, #fa71cd);
     }
 
-#output {
-  margin-top: 30px;
-  padding: 20px;
-  border-radius: 16px;
-  background: rgba(30, 10, 40, 0.65); /* Dark translucent plum */
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  border: 1px solid rgba(255, 200, 255, 0.25);
-  color: #ffd6ff; /* Soft light-pink/lavender text */
-  font-family: 'Courier New', monospace;
-  font-size: 1rem;
-  line-height: 1.6;
-  max-height: 400px;
-  overflow-y: auto;
-  width: 100%;
-  max-width: 600px;
-  white-space: pre-wrap;
-  box-shadow:
-    inset 0 0 12px rgba(255, 100, 255, 0.2),
-    0 8px 24px rgba(94, 0, 128, 0.2);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); /* subtle dark halo for contrast */
-  transition: all 0.3s ease-in-out;
-}
+    #output {
+      margin: 30px auto 0;
+      padding: 20px;
+      border-radius: 16px;
+      background: rgba(30, 10, 40, 0.65);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 200, 255, 0.25);
+      color: #ffd6ff;
+      font-family: 'Courier New', monospace;
+      font-size: 1rem;
+      line-height: 1.6;
+      max-height: 400px;
+      overflow-y: auto;
+      width: 100%;
+      max-width: 600px;
+      white-space: pre-wrap;
+      box-shadow:
+        inset 0 0 12px rgba(255, 100, 255, 0.2),
+        0 8px 24px rgba(94, 0, 128, 0.2);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease-in-out;
+    }
 
+    /* Stylish pink-purple scrollbar */
+    #output::-webkit-scrollbar {
+      width: 8px;
+    }
 
-    /* Optional custom scrollbar */
-   #output::-webkit-scrollbar {
-  width: 8px;
-}
+    #output::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #ff8fe2, #d89cff);
+      border-radius: 8px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
 
-#output::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #ff8fe2, #d89cff);
-  border-radius: 8px;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-}
+    #output::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+    }
 
-#output::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
-}
-
+    /* Responsive tweaks */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.6rem;
+      }
+      #searchInput, #searchBtn {
+        font-size: 0.95rem;
+      }
+      #output {
+        font-size: 0.9rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -150,7 +165,7 @@
         outputDiv.textContent = results.map((student, idx) =>
           `#${idx + 1}:\n` +
           Object.entries(student).map(([k, v]) => `${k}: ${v}`).join('\n')
-        ).join('\n\n' + '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n');
+        ).join('\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n');
       }
     });
   </script>
